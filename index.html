@@ -1,0 +1,1762 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indway — AI Tools Directory</title>
+    <meta
+      name="description"
+      content="The most comprehensive map of the AI ecosystem. 700+ tools across LLMs, APIs, Agents, Infrastructure and more. Bilingual EN/ID."
+    />
+    <meta property="og:title" content="Indway — AI Tools Directory" />
+    <meta
+      property="og:description"
+      content="700+ AI tools mapped. Search, filter, discover."
+    />
+    <meta property="og:url" content="https://indway.github.io" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #080b0f;
+        --surface: #0e1318;
+        --card: #121820;
+        --border: #1e2832;
+        --border-bright: #2d3d4f;
+        --text: #c8d6e8;
+        --muted: #5a7080;
+        --accent: #00e5ff;
+        --accent2: #ff6b35;
+        --accent3: #39ff14;
+        --gold: #ffd166;
+        --font-display: "Syne", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 13px;
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* GRID BACKGROUND */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* NOISE OVERLAY */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.5;
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ── HEADER ── */
+      header {
+        border-bottom: 1px solid var(--border);
+        padding: 20px 0;
+        position: sticky;
+        top: 0;
+        background: rgba(8, 11, 15, 0.92);
+        backdrop-filter: blur(12px);
+        z-index: 100;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-family: var(--font-display);
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: #fff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .logo span {
+        color: var(--accent);
+      }
+
+      .badge-count {
+        background: var(--border);
+        border: 1px solid var(--border-bright);
+        color: var(--accent);
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 2px;
+        letter-spacing: 1px;
+      }
+
+      .header-links {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .header-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        transition: color 0.2s;
+      }
+      .header-links a:hover {
+        color: var(--accent);
+      }
+
+      .star-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--gold);
+        color: #000;
+        padding: 6px 14px;
+        border-radius: 3px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        transition:
+          opacity 0.2s,
+          transform 0.15s;
+      }
+      .star-btn:hover {
+        opacity: 0.88;
+        transform: translateY(-1px);
+      }
+
+      /* ── HERO ── */
+      .hero {
+        padding: 80px 0 60px;
+        text-align: center;
+      }
+
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid var(--border-bright);
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 2px;
+        padding: 4px 12px;
+        border-radius: 2px;
+        margin-bottom: 28px;
+      }
+
+      .hero-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--accent3);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(0.8);
+        }
+      }
+
+      h1 {
+        font-family: var(--font-display);
+        font-size: clamp(36px, 7vw, 72px);
+        font-weight: 800;
+        letter-spacing: -2px;
+        line-height: 1;
+        color: #fff;
+        margin-bottom: 20px;
+      }
+
+      h1 em {
+        font-style: normal;
+        color: var(--accent);
+        position: relative;
+      }
+
+      .hero-sub {
+        color: var(--muted);
+        font-size: 14px;
+        max-width: 480px;
+        margin: 0 auto 36px;
+        line-height: 1.8;
+      }
+
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        flex-wrap: wrap;
+        margin-bottom: 48px;
+      }
+
+      .stat {
+        text-align: center;
+      }
+
+      .stat-num {
+        font-family: var(--font-display);
+        font-size: 28px;
+        font-weight: 800;
+        color: #fff;
+        display: block;
+      }
+
+      .stat-label {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: var(--muted);
+      }
+
+      /* ── SEARCH ── */
+      .search-wrap {
+        max-width: 600px;
+        margin: 0 auto 20px;
+        position: relative;
+      }
+
+      .search-wrap::before {
+        content: "⌕";
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        font-size: 16px;
+        pointer-events: none;
+      }
+
+      #search {
+        width: 100%;
+        background: var(--surface);
+        border: 1px solid var(--border-bright);
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 13px;
+        padding: 14px 14px 14px 42px;
+        border-radius: 4px;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+      #search:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.1);
+      }
+
+      #search::placeholder {
+        color: var(--muted);
+      }
+
+      .filter-row {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+
+      .filter-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 1px;
+        padding: 5px 12px;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(0, 229, 255, 0.05);
+      }
+
+      .results-info {
+        text-align: center;
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        margin-bottom: 40px;
+      }
+
+      /* ── CATEGORIES ── */
+      .categories {
+        padding: 0 0 80px;
+      }
+
+      .cat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 2px;
+      }
+
+      .cat-section {
+        display: none;
+      }
+      .cat-section.visible {
+        display: block;
+      }
+
+      .cat-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        transition: background 0.15s;
+        user-select: none;
+      }
+
+      .cat-header:hover {
+        background: var(--card);
+      }
+
+      .cat-title {
+        font-family: var(--font-display);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .cat-count {
+        font-size: 10px;
+        color: var(--muted);
+        background: var(--border);
+        padding: 2px 7px;
+        border-radius: 2px;
+      }
+
+      .cat-toggle {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+
+      .cat-section.open .cat-toggle {
+        transform: rotate(180deg);
+      }
+
+      .cat-body {
+        display: none;
+        border: 1px solid var(--border);
+        border-top: none;
+      }
+
+      .cat-section.open .cat-body {
+        display: block;
+      }
+
+      .tool-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 20px;
+        border-bottom: 1px solid var(--border);
+        transition: background 0.1s;
+      }
+
+      .tool-item:last-child {
+        border-bottom: none;
+      }
+      .tool-item:hover {
+        background: rgba(0, 229, 255, 0.03);
+      }
+
+      .tool-name {
+        font-weight: 500;
+        color: #fff;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .tool-desc {
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 2px;
+      }
+
+      .tool-tags {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-top: 5px;
+      }
+
+      .tag {
+        font-size: 9px;
+        letter-spacing: 0.8px;
+        padding: 1px 6px;
+        border-radius: 2px;
+        border: 1px solid;
+      }
+
+      .tag-free {
+        border-color: #39ff1440;
+        color: var(--accent3);
+        background: rgba(57, 255, 20, 0.05);
+      }
+      .tag-open {
+        border-color: #58a6ff40;
+        color: #58a6ff;
+        background: rgba(88, 166, 255, 0.05);
+      }
+      .tag-api {
+        border-color: #ff6b3540;
+        color: var(--accent2);
+        background: rgba(255, 107, 53, 0.05);
+      }
+      .tag-id {
+        border-color: #ffd16640;
+        color: var(--gold);
+        background: rgba(255, 209, 102, 0.05);
+      }
+      .tag-paid {
+        border-color: #ffffff20;
+        color: var(--muted);
+      }
+
+      .tool-link {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 10px;
+        white-space: nowrap;
+        margin-top: 2px;
+        display: block;
+        transition: color 0.15s;
+        flex-shrink: 0;
+      }
+      .tool-link:hover {
+        color: var(--accent);
+      }
+
+      /* ── EMPTY STATE ── */
+      .empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--muted);
+        display: none;
+      }
+      .empty.show {
+        display: block;
+      }
+      .empty-icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 32px 0;
+        text-align: center;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 2;
+      }
+
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* ── LANG TOGGLE ── */
+      .lang-toggle {
+        display: flex;
+        gap: 4px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        padding: 2px;
+      }
+
+      .lang-btn {
+        background: transparent;
+        border: none;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 1px;
+        padding: 4px 8px;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: all 0.15s;
+      }
+
+      .lang-btn.active {
+        background: var(--accent);
+        color: #000;
+        font-weight: 600;
+      }
+
+      /* ── ANIMATIONS ── */
+      .cat-section {
+        animation: fadeUp 0.3s ease both;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .hero {
+          padding: 48px 0 40px;
+        }
+        .hero-stats {
+          gap: 20px;
+        }
+        .cat-grid {
+          grid-template-columns: 1fr;
+        }
+        .header-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap header-inner">
+        <a href="/" class="logo"
+          >IND<span>WAY</span>
+          <span class="badge-count">700+ AI TOOLS LIST</span></a
+        >
+        <div class="header-links">
+          <a href="https://github.com/indway/indway.github.io">GitHub</a>
+          <a
+            href="https://github.com/indway/indway.github.io/blob/main/docs/AI_TOOLS_DIRECTORY.md"
+            >Docs</a
+          >
+          <a
+            href="https://github.com/indway/indway.github.io/blob/main/CONTRIBUTING.md"
+            >Contribute</a
+          >
+          <div class="lang-toggle">
+            <button class="lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('id')">ID</button>
+          </div>
+          <a href="https://github.com/indway/indway.github.io" class="star-btn"
+            >★ Star</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="wrap">
+        <section class="hero">
+          <div class="hero-tag" id="hero-tag">LIVE DIRECTORY · APRIL 2026</div>
+          <h1>Map the <em>AI</em><br />ecosystem.</h1>
+          <p class="hero-sub" id="hero-sub">
+            Every LLM, API, agent framework, vector database, and dev tool —
+            organized, searchable, and always up to date.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-num">700+</span
+              ><span class="stat-label">TOOLS</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">22</span
+              ><span class="stat-label">CATEGORIES</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">2</span
+              ><span class="stat-label">LANGUAGES</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">∞</span
+              ><span class="stat-label">GROWING</span>
+            </div>
+          </div>
+
+          <div class="search-wrap">
+            <input
+              type="text"
+              id="search"
+              placeholder="Search tools, categories, tags..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+
+          <div class="filter-row" id="filter-row">
+            <button class="filter-btn active" data-filter="all">ALL</button>
+            <button class="filter-btn" data-filter="free">FREE TIER</button>
+            <button class="filter-btn" data-filter="open">OPEN SOURCE</button>
+            <button class="filter-btn" data-filter="api">HAS API</button>
+            <button class="filter-btn" data-filter="id">🇮🇩 INDONESIA</button>
+            <button class="filter-btn" data-filter="local">SELF-HOST</button>
+          </div>
+
+          <div class="results-info" id="results-info">
+            Showing all 700+ tools across 22 categories
+          </div>
+        </section>
+
+        <section class="categories">
+          <div class="cat-grid" id="cat-grid"></div>
+          <div class="empty" id="empty">
+            <div class="empty-icon">◌</div>
+            <div>No tools found for "<span id="empty-query"></span>"</div>
+            <div style="margin-top: 8px; font-size: 10px">
+              Try a different keyword or
+              <a
+                href="https://github.com/indway/indway.github.io/issues"
+                style="color: var(--accent)"
+                >suggest a tool</a
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div>
+          <a href="https://indway.github.io">indway.github.io</a> · Built by
+          <a href="https://github.com/irfnrdh">@irfnrdh</a> · Aceh Tamiang,
+          Indonesia ·
+          <a href="https://github.com/indway/indway.github.io">GitHub</a> ·
+          <a
+            href="https://github.com/indway/indway.github.io/blob/main/CONTRIBUTING.md"
+            >Contribute</a
+          >
+        </div>
+        <div style="margin-top: 6px; color: #2d3d4f">
+          MIT License · Community-driven · Always open
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const DATA = [
+        // ── LLM ──
+        {
+          name: "GPT-4o",
+          desc: "OpenAI flagship multimodal model",
+          cat: "LLM",
+          tags: ["api", "paid"],
+          link: "openai.com",
+        },
+        {
+          name: "GPT-4.1",
+          desc: "Advanced reasoning & coding",
+          cat: "LLM",
+          tags: ["api", "paid"],
+          link: "openai.com",
+        },
+        {
+          name: "o1 / o3",
+          desc: "Deep reasoning, math & science",
+          cat: "LLM",
+          tags: ["api", "paid"],
+          link: "openai.com",
+        },
+        {
+          name: "Claude 3.5 Sonnet",
+          desc: "Safety-first, nuanced long-form writing",
+          cat: "LLM",
+          tags: ["api", "paid"],
+          link: "anthropic.com",
+        },
+        {
+          name: "Claude 4 Sonnet",
+          desc: "Hybrid reasoning, Anthropic latest",
+          cat: "LLM",
+          tags: ["api", "paid"],
+          link: "anthropic.com",
+        },
+        {
+          name: "Gemini 2.0 Flash",
+          desc: "Fast multimodal, generous free tier",
+          cat: "LLM",
+          tags: ["api", "free"],
+          link: "ai.google.dev",
+        },
+        {
+          name: "Gemini 2.5 Pro",
+          desc: "Google premium multimodal model",
+          cat: "LLM",
+          tags: ["api", "paid"],
+          link: "ai.google.dev",
+        },
+        {
+          name: "Grok 3",
+          desc: "Real-time X/Twitter data access",
+          cat: "LLM",
+          tags: ["api", "paid"],
+          link: "x.com/grok",
+        },
+        {
+          name: "Llama 3.3 70B",
+          desc: "Meta open weights, strongest open LLM",
+          cat: "LLM",
+          tags: ["open", "free", "local"],
+          link: "meta.com",
+        },
+        {
+          name: "Mistral Large",
+          desc: "Efficient multilingual reasoning",
+          cat: "LLM",
+          tags: ["api", "open"],
+          link: "mistral.ai",
+        },
+        {
+          name: "DeepSeek V3",
+          desc: "671B MoE, extremely affordable API",
+          cat: "LLM",
+          tags: ["api", "open", "free"],
+          link: "deepseek.com",
+        },
+        {
+          name: "DeepSeek R1",
+          desc: "Open source reasoning model",
+          cat: "LLM",
+          tags: ["open", "free"],
+          link: "deepseek.com",
+        },
+        {
+          name: "Qwen2.5 72B",
+          desc: "Alibaba, best open multilingual model",
+          cat: "LLM",
+          tags: ["open", "free", "id"],
+          link: "huggingface.co",
+        },
+        {
+          name: "Phi-4",
+          desc: "Microsoft 14B efficient edge model",
+          cat: "LLM",
+          tags: ["open", "free", "local"],
+          link: "huggingface.co",
+        },
+        {
+          name: "Gemma 3",
+          desc: "Google open model, 1B–27B sizes",
+          cat: "LLM",
+          tags: ["open", "free", "local"],
+          link: "huggingface.co",
+        },
+
+        // ── API PLATFORMS ──
+        {
+          name: "OpenAI API",
+          desc: "GPT-4o, o1, Whisper, DALL-E",
+          cat: "API & Platforms",
+          tags: ["api", "paid"],
+          link: "platform.openai.com",
+        },
+        {
+          name: "Anthropic API",
+          desc: "Claude 3–4 series",
+          cat: "API & Platforms",
+          tags: ["api", "paid"],
+          link: "docs.anthropic.com",
+        },
+        {
+          name: "Google AI Studio",
+          desc: "Gemini API, generous free tier",
+          cat: "API & Platforms",
+          tags: ["api", "free"],
+          link: "ai.google.dev",
+        },
+        {
+          name: "Groq",
+          desc: "Ultra-fast inference, free tier 14K req/day",
+          cat: "API & Platforms",
+          tags: ["api", "free"],
+          link: "groq.com",
+        },
+        {
+          name: "Together AI",
+          desc: "50+ open models, affordable pricing",
+          cat: "API & Platforms",
+          tags: ["api", "paid"],
+          link: "together.ai",
+        },
+        {
+          name: "OpenRouter",
+          desc: "100+ models via single API",
+          cat: "API & Platforms",
+          tags: ["api", "free"],
+          link: "openrouter.ai",
+        },
+        {
+          name: "Fireworks AI",
+          desc: "Fast open model inference",
+          cat: "API & Platforms",
+          tags: ["api", "paid"],
+          link: "fireworks.ai",
+        },
+        {
+          name: "Replicate",
+          desc: "Open models + image, pay per second",
+          cat: "API & Platforms",
+          tags: ["api", "paid"],
+          link: "replicate.com",
+        },
+        {
+          name: "Cloudflare Workers AI",
+          desc: "Edge inference, 10K req/day free",
+          cat: "API & Platforms",
+          tags: ["api", "free"],
+          link: "cloudflare.com",
+        },
+        {
+          name: "Cohere API",
+          desc: "Command R, Embed — RAG-optimized",
+          cat: "API & Platforms",
+          tags: ["api", "free"],
+          link: "cohere.com",
+        },
+
+        // ── CODE TOOLS ──
+        {
+          name: "GitHub Copilot",
+          desc: "AI autocomplete in VS Code & JetBrains",
+          cat: "Code & Dev Tools",
+          tags: ["api", "paid"],
+          link: "github.com/copilot",
+        },
+        {
+          name: "Cursor",
+          desc: "AI-first code editor, multi-file edit",
+          cat: "Code & Dev Tools",
+          tags: ["paid"],
+          link: "cursor.sh",
+        },
+        {
+          name: "Windsurf",
+          desc: "Agentic coding, cascade mode",
+          cat: "Code & Dev Tools",
+          tags: ["paid"],
+          link: "codeium.com/windsurf",
+        },
+        {
+          name: "Claude Code",
+          desc: "Anthropic agentic coding CLI",
+          cat: "Code & Dev Tools",
+          tags: ["api", "paid"],
+          link: "claude.ai/code",
+        },
+        {
+          name: "Aider",
+          desc: "Git-aware AI coding in terminal",
+          cat: "Code & Dev Tools",
+          tags: ["open", "free", "local"],
+          link: "aider.chat",
+        },
+        {
+          name: "Continue.dev",
+          desc: "Open source AI coding, self-hostable",
+          cat: "Code & Dev Tools",
+          tags: ["open", "free", "local"],
+          link: "continue.dev",
+        },
+        {
+          name: "Cline",
+          desc: "Agentic coding extension for VS Code",
+          cat: "Code & Dev Tools",
+          tags: ["open", "free"],
+          link: "github.com/saoudrizwan/claude-dev",
+        },
+        {
+          name: "v0 (Vercel)",
+          desc: "Prompt → UI components",
+          cat: "Code & Dev Tools",
+          tags: ["free", "api"],
+          link: "v0.dev",
+        },
+        {
+          name: "Bolt.new",
+          desc: "Prompt → fullstack app",
+          cat: "Code & Dev Tools",
+          tags: ["free"],
+          link: "bolt.new",
+        },
+        {
+          name: "Lovable",
+          desc: "Prompt → React app",
+          cat: "Code & Dev Tools",
+          tags: ["paid"],
+          link: "lovable.dev",
+        },
+
+        // ── IMAGE ──
+        {
+          name: "Midjourney",
+          desc: "Best artistic image quality",
+          cat: "Image Generation",
+          tags: ["paid"],
+          link: "midjourney.com",
+        },
+        {
+          name: "DALL-E 3",
+          desc: "Via ChatGPT, easy to use",
+          cat: "Image Generation",
+          tags: ["api", "paid"],
+          link: "openai.com",
+        },
+        {
+          name: "Flux.1",
+          desc: "Photorealistic, open weights",
+          cat: "Image Generation",
+          tags: ["open", "local"],
+          link: "huggingface.co",
+        },
+        {
+          name: "Stable Diffusion",
+          desc: "Open source, fully self-hostable",
+          cat: "Image Generation",
+          tags: ["open", "free", "local"],
+          link: "stability.ai",
+        },
+        {
+          name: "Ideogram",
+          desc: "Accurate text in images",
+          cat: "Image Generation",
+          tags: ["free", "paid"],
+          link: "ideogram.ai",
+        },
+        {
+          name: "ComfyUI",
+          desc: "Node-based SD workflow, powerful",
+          cat: "Image Generation",
+          tags: ["open", "free", "local"],
+          link: "github.com/comfyanonymous/ComfyUI",
+        },
+        {
+          name: "Upscayl",
+          desc: "Open source local upscaler",
+          cat: "Image Generation",
+          tags: ["open", "free", "local"],
+          link: "upscayl.org",
+        },
+        {
+          name: "Adobe Firefly",
+          desc: "Copyright-safe generation",
+          cat: "Image Generation",
+          tags: ["paid"],
+          link: "firefly.adobe.com",
+        },
+
+        // ── VIDEO ──
+        {
+          name: "Sora",
+          desc: "OpenAI video generation",
+          cat: "Video Generation",
+          tags: ["paid"],
+          link: "openai.com/sora",
+        },
+        {
+          name: "Runway Gen-3",
+          desc: "Professional video AI",
+          cat: "Video Generation",
+          tags: ["paid"],
+          link: "runwayml.com",
+        },
+        {
+          name: "Kling AI",
+          desc: "Realistic video from Kuaishou",
+          cat: "Video Generation",
+          tags: ["free", "paid"],
+          link: "klingai.com",
+        },
+        {
+          name: "HeyGen",
+          desc: "AI avatar video presenter",
+          cat: "Video Generation",
+          tags: ["paid"],
+          link: "heygen.com",
+        },
+        {
+          name: "Hedra",
+          desc: "Lip-sync avatar, free tier",
+          cat: "Video Generation",
+          tags: ["free", "paid"],
+          link: "hedra.com",
+        },
+        {
+          name: "Invideo AI",
+          desc: "Script → video automatically",
+          cat: "Video Generation",
+          tags: ["free", "paid"],
+          link: "invideo.io",
+        },
+
+        // ── AUDIO ──
+        {
+          name: "ElevenLabs",
+          desc: "Best TTS quality, voice cloning",
+          cat: "Audio & Voice",
+          tags: ["api", "paid", "free"],
+          link: "elevenlabs.io",
+        },
+        {
+          name: "OpenAI TTS",
+          desc: "Fast, natural, affordable",
+          cat: "Audio & Voice",
+          tags: ["api", "paid"],
+          link: "platform.openai.com",
+        },
+        {
+          name: "Whisper",
+          desc: "OpenAI STT, supports Bahasa Indonesia",
+          cat: "Audio & Voice",
+          tags: ["open", "free", "local", "id"],
+          link: "openai.com/whisper",
+        },
+        {
+          name: "faster-whisper",
+          desc: "Local Whisper, optimized & efficient",
+          cat: "Audio & Voice",
+          tags: ["open", "free", "local"],
+          link: "github.com/SYSTRAN/faster-whisper",
+        },
+        {
+          name: "Deepgram",
+          desc: "Real-time STT, best accuracy",
+          cat: "Audio & Voice",
+          tags: ["api", "paid", "free"],
+          link: "deepgram.com",
+        },
+        {
+          name: "Suno",
+          desc: "Text → full song with vocals",
+          cat: "Audio & Voice",
+          tags: ["free", "paid"],
+          link: "suno.com",
+        },
+        {
+          name: "Udio",
+          desc: "High quality AI music generation",
+          cat: "Audio & Voice",
+          tags: ["free", "paid"],
+          link: "udio.com",
+        },
+        {
+          name: "Kokoro TTS",
+          desc: "Open source lightweight TTS",
+          cat: "Audio & Voice",
+          tags: ["open", "free", "local"],
+          link: "huggingface.co",
+        },
+
+        // ── AGENTS ──
+        {
+          name: "LangChain",
+          desc: "Most popular agent framework",
+          cat: "AI Agents",
+          tags: ["open", "free", "api"],
+          link: "langchain.com",
+        },
+        {
+          name: "LlamaIndex",
+          desc: "RAG + data agents",
+          cat: "AI Agents",
+          tags: ["open", "free", "api"],
+          link: "llamaindex.ai",
+        },
+        {
+          name: "CrewAI",
+          desc: "Multi-agent role-play framework",
+          cat: "AI Agents",
+          tags: ["open", "free"],
+          link: "crewai.com",
+        },
+        {
+          name: "AutoGen",
+          desc: "Microsoft multi-agent conversations",
+          cat: "AI Agents",
+          tags: ["open", "free"],
+          link: "github.com/microsoft/autogen",
+        },
+        {
+          name: "Phidata",
+          desc: "Agents with memory + tools",
+          cat: "AI Agents",
+          tags: ["open", "free"],
+          link: "phidata.com",
+        },
+        {
+          name: "PydanticAI",
+          desc: "Type-safe agent framework",
+          cat: "AI Agents",
+          tags: ["open", "free"],
+          link: "ai.pydantic.dev",
+        },
+        {
+          name: "Smolagents",
+          desc: "HuggingFace lightweight agents",
+          cat: "AI Agents",
+          tags: ["open", "free"],
+          link: "huggingface.co",
+        },
+        {
+          name: "Flowise",
+          desc: "Open source LangChain UI builder",
+          cat: "AI Agents",
+          tags: ["open", "free", "local"],
+          link: "flowiseai.com",
+        },
+        {
+          name: "Dify",
+          desc: "Open source AI app builder",
+          cat: "AI Agents",
+          tags: ["open", "free", "local"],
+          link: "dify.ai",
+        },
+
+        // ── VECTOR DB ──
+        {
+          name: "Pinecone",
+          desc: "Managed vector DB, highly scalable",
+          cat: "Vector Database",
+          tags: ["api", "paid", "free"],
+          link: "pinecone.io",
+        },
+        {
+          name: "Qdrant",
+          desc: "Rust-based, fast, open source",
+          cat: "Vector Database",
+          tags: ["open", "free", "local", "api"],
+          link: "qdrant.tech",
+        },
+        {
+          name: "Chroma",
+          desc: "Simple local vector DB for dev",
+          cat: "Vector Database",
+          tags: ["open", "free", "local"],
+          link: "trychroma.com",
+        },
+        {
+          name: "Weaviate",
+          desc: "GraphQL, multimodal vector DB",
+          cat: "Vector Database",
+          tags: ["open", "free", "local", "api"],
+          link: "weaviate.io",
+        },
+        {
+          name: "pgvector",
+          desc: "Vector extension for PostgreSQL",
+          cat: "Vector Database",
+          tags: ["open", "free"],
+          link: "github.com/pgvector/pgvector",
+        },
+        {
+          name: "Supabase Vector",
+          desc: "Managed pgvector, free tier",
+          cat: "Vector Database",
+          tags: ["free", "api"],
+          link: "supabase.com",
+        },
+        {
+          name: "LanceDB",
+          desc: "Embedded, serverless, fast",
+          cat: "Vector Database",
+          tags: ["open", "free", "local"],
+          link: "lancedb.com",
+        },
+        {
+          name: "Milvus",
+          desc: "Enterprise-scale vector DB",
+          cat: "Vector Database",
+          tags: ["open", "free", "local"],
+          link: "milvus.io",
+        },
+
+        // ── DEPLOYMENT ──
+        {
+          name: "Ollama",
+          desc: "Run LLMs locally, dead simple",
+          cat: "Deployment",
+          tags: ["open", "free", "local"],
+          link: "ollama.com",
+        },
+        {
+          name: "LM Studio",
+          desc: "GUI for local LLM inference",
+          cat: "Deployment",
+          tags: ["free", "local"],
+          link: "lmstudio.ai",
+        },
+        {
+          name: "vLLM",
+          desc: "High-throughput inference server",
+          cat: "Deployment",
+          tags: ["open", "free", "local"],
+          link: "github.com/vllm-project/vllm",
+        },
+        {
+          name: "llama.cpp",
+          desc: "CPU inference, ultra lightweight",
+          cat: "Deployment",
+          tags: ["open", "free", "local"],
+          link: "github.com/ggerganov/llama.cpp",
+        },
+        {
+          name: "AWS Bedrock",
+          desc: "Managed LLM API on AWS",
+          cat: "Deployment",
+          tags: ["api", "paid"],
+          link: "aws.amazon.com/bedrock",
+        },
+        {
+          name: "Cloudflare Workers AI",
+          desc: "Edge inference, global CDN",
+          cat: "Deployment",
+          tags: ["api", "free"],
+          link: "cloudflare.com",
+        },
+        {
+          name: "RunPod",
+          desc: "Affordable GPU cloud",
+          cat: "Deployment",
+          tags: ["paid"],
+          link: "runpod.io",
+        },
+        {
+          name: "Modal",
+          desc: "Serverless GPU Python",
+          cat: "Deployment",
+          tags: ["paid", "free"],
+          link: "modal.com",
+        },
+
+        // ── AUTOMATION ──
+        {
+          name: "n8n",
+          desc: "Open source workflow automation, self-host",
+          cat: "Automation",
+          tags: ["open", "free", "local"],
+          link: "n8n.io",
+        },
+        {
+          name: "Make",
+          desc: "Visual automation, 1000+ integrations",
+          cat: "Automation",
+          tags: ["paid", "free"],
+          link: "make.com",
+        },
+        {
+          name: "Zapier",
+          desc: "Easy automation, huge ecosystem",
+          cat: "Automation",
+          tags: ["paid", "free"],
+          link: "zapier.com",
+        },
+        {
+          name: "Activepieces",
+          desc: "Open source Zapier alternative",
+          cat: "Automation",
+          tags: ["open", "free", "local"],
+          link: "activepieces.com",
+        },
+        {
+          name: "Relevance AI",
+          desc: "Build AI tools without code",
+          cat: "Automation",
+          tags: ["paid", "free"],
+          link: "relevanceai.com",
+        },
+
+        // ── OBSERVABILITY ──
+        {
+          name: "Langfuse",
+          desc: "Open source LLM observability",
+          cat: "Observability",
+          tags: ["open", "free", "local"],
+          link: "langfuse.com",
+        },
+        {
+          name: "LangSmith",
+          desc: "LangChain tracing + eval",
+          cat: "Observability",
+          tags: ["paid", "free"],
+          link: "smith.langchain.com",
+        },
+        {
+          name: "Helicone",
+          desc: "LLM proxy + analytics",
+          cat: "Observability",
+          tags: ["free", "paid"],
+          link: "helicone.ai",
+        },
+        {
+          name: "Weights & Biases",
+          desc: "Experiment tracking + LLM evals",
+          cat: "Observability",
+          tags: ["free", "paid"],
+          link: "wandb.ai",
+        },
+
+        // ── SEARCH ──
+        {
+          name: "Perplexity",
+          desc: "AI search with citations",
+          cat: "AI Search",
+          tags: ["free", "paid", "api"],
+          link: "perplexity.ai",
+        },
+        {
+          name: "Tavily",
+          desc: "Search API for AI agents",
+          cat: "AI Search",
+          tags: ["api", "free", "paid"],
+          link: "tavily.com",
+        },
+        {
+          name: "Exa",
+          desc: "Neural search API for developers",
+          cat: "AI Search",
+          tags: ["api", "paid", "free"],
+          link: "exa.ai",
+        },
+        {
+          name: "Brave Search API",
+          desc: "Privacy-first search API",
+          cat: "AI Search",
+          tags: ["api", "free", "paid"],
+          link: "brave.com/search/api",
+        },
+        {
+          name: "Elicit",
+          desc: "AI research paper assistant",
+          cat: "AI Search",
+          tags: ["free", "paid"],
+          link: "elicit.com",
+        },
+
+        // ── MCP ──
+        {
+          name: "MCP GitHub Server",
+          desc: "GitHub repos, PR, issues via MCP",
+          cat: "MCP",
+          tags: ["open", "free"],
+          link: "github.com/modelcontextprotocol",
+        },
+        {
+          name: "MCP Filesystem",
+          desc: "Local file system access",
+          cat: "MCP",
+          tags: ["open", "free", "local"],
+          link: "github.com/modelcontextprotocol",
+        },
+        {
+          name: "MCP PostgreSQL",
+          desc: "Query PostgreSQL databases",
+          cat: "MCP",
+          tags: ["open", "free"],
+          link: "github.com/modelcontextprotocol",
+        },
+        {
+          name: "MCP Puppeteer",
+          desc: "Browser automation via MCP",
+          cat: "MCP",
+          tags: ["open", "free"],
+          link: "github.com/modelcontextprotocol",
+        },
+        {
+          name: "mcp.so",
+          desc: "Community MCP server directory",
+          cat: "MCP",
+          tags: ["free"],
+          link: "mcp.so",
+        },
+        {
+          name: "Smithery",
+          desc: "MCP server marketplace",
+          cat: "MCP",
+          tags: ["free"],
+          link: "smithery.ai",
+        },
+
+        // ── INDONESIA ──
+        {
+          name: "Sahabat AI",
+          desc: "Indonesian LLM by Indosat + NVIDIA",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "api"],
+          link: "sahabat.ai",
+        },
+        {
+          name: "Kata.ai",
+          desc: "Chatbot platform, bahasa Indonesia",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "api", "paid"],
+          link: "kata.ai",
+        },
+        {
+          name: "Prosa.ai",
+          desc: "NLP tools for Bahasa Indonesia",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "api"],
+          link: "prosa.ai",
+        },
+        {
+          name: "IndoBERT",
+          desc: "BERT model for Bahasa Indonesia",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "open", "free"],
+          link: "huggingface.co",
+        },
+        {
+          name: "Groq (Free)",
+          desc: "14.4K req/day — Llama 3, ultra fast",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "free", "api"],
+          link: "groq.com",
+        },
+        {
+          name: "Gemini Flash (Free)",
+          desc: "1M token/day gratis dari Google",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "free", "api"],
+          link: "ai.google.dev",
+        },
+        {
+          name: "DeepSeek API",
+          desc: "$0.27/1M token — paling murah",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "api", "paid"],
+          link: "deepseek.com",
+        },
+        {
+          name: "Qwen2.5",
+          desc: "Open source terkuat untuk Bahasa Indonesia",
+          cat: "🇮🇩 Indonesia",
+          tags: ["id", "open", "free", "local"],
+          link: "huggingface.co",
+        },
+
+        // ── WRITING ──
+        {
+          name: "Claude.ai",
+          desc: "Best nuanced writing & long context",
+          cat: "Writing & Content",
+          tags: ["free", "paid", "id"],
+          link: "claude.ai",
+        },
+        {
+          name: "Notion AI",
+          desc: "AI integrated into Notion workspace",
+          cat: "Writing & Content",
+          tags: ["paid", "id"],
+          link: "notion.so",
+        },
+        {
+          name: "Copy.ai",
+          desc: "Marketing copy & social media",
+          cat: "Writing & Content",
+          tags: ["free", "paid", "id"],
+          link: "copy.ai",
+        },
+        {
+          name: "Writesonic",
+          desc: "SEO + blog writing",
+          cat: "Writing & Content",
+          tags: ["free", "paid", "id"],
+          link: "writesonic.com",
+        },
+        {
+          name: "Jasper",
+          desc: "Enterprise marketing content",
+          cat: "Writing & Content",
+          tags: ["paid"],
+          link: "jasper.ai",
+        },
+
+        // ── RAG ──
+        {
+          name: "LlamaIndex",
+          desc: "Most complete RAG framework",
+          cat: "RAG & Knowledge",
+          tags: ["open", "free", "api"],
+          link: "llamaindex.ai",
+        },
+        {
+          name: "Ragas",
+          desc: "RAG evaluation & testing framework",
+          cat: "RAG & Knowledge",
+          tags: ["open", "free"],
+          link: "ragas.io",
+        },
+        {
+          name: "Unstructured.io",
+          desc: "Document parsing for RAG pipelines",
+          cat: "RAG & Knowledge",
+          tags: ["open", "free", "paid"],
+          link: "unstructured.io",
+        },
+        {
+          name: "Docling",
+          desc: "IBM doc-to-markdown parser",
+          cat: "RAG & Knowledge",
+          tags: ["open", "free"],
+          link: "github.com/DS4SD/docling",
+        },
+        {
+          name: "Mem.ai",
+          desc: "AI-powered personal memory & notes",
+          cat: "RAG & Knowledge",
+          tags: ["paid", "free"],
+          link: "mem.ai",
+        },
+      ];
+
+      const CATEGORIES = [...new Set(DATA.map((t) => t.cat))];
+      const CAT_ICONS = {
+        LLM: "🧠",
+        "API & Platforms": "⚡",
+        "Code & Dev Tools": "💻",
+        "Image Generation": "🎨",
+        "Video Generation": "🎬",
+        "Audio & Voice": "🎵",
+        "AI Agents": "🤖",
+        "Vector Database": "🗄️",
+        Deployment: "🏗️",
+        Automation: "⚙️",
+        Observability: "📊",
+        "AI Search": "🔍",
+        MCP: "🔗",
+        "🇮🇩 Indonesia": "🇮🇩",
+        "Writing & Content": "✍️",
+        "RAG & Knowledge": "📚",
+      };
+
+      let currentFilter = "all";
+      let currentLang = "en";
+      let searchVal = "";
+
+      const TRANSLATIONS = {
+        en: {
+          heroTag: "LIVE DIRECTORY · APRIL 2026",
+          heroSub:
+            "Every LLM, API, agent framework, vector database, and dev tool — organized, searchable, and always up to date.",
+          searchPlaceholder: "Search tools, categories, tags...",
+          showingAll: "Showing all 700+ tools across 22 categories",
+          showing: (n, q) => `Showing ${n} tools for "${q}"`,
+          noResults: "No tools found",
+        },
+        id: {
+          heroTag: "DIREKTORI LIVE · APRIL 2026",
+          heroSub:
+            "Semua LLM, API, agent framework, vector database, dan dev tool — terorganisir, bisa dicari, dan selalu diperbarui.",
+          searchPlaceholder: "Cari tools, kategori, tag...",
+          showingAll: "Menampilkan 700+ tools di 22 kategori",
+          showing: (n, q) => `Menampilkan ${n} tools untuk "${q}"`,
+          noResults: "Tidak ada tools ditemukan",
+        },
+      };
+
+      function setLang(lang) {
+        currentLang = lang;
+        document
+          .querySelectorAll(".lang-btn")
+          .forEach((b) =>
+            b.classList.toggle("active", b.textContent === lang.toUpperCase()),
+          );
+        const t = TRANSLATIONS[lang];
+        document.getElementById("hero-tag").textContent = t.heroTag;
+        document.getElementById("hero-sub").textContent = t.heroSub;
+        document.getElementById("search").placeholder = t.searchPlaceholder;
+        updateResults();
+      }
+
+      function tagBadge(tag) {
+        const map = {
+          free: "FREE",
+          open: "OPEN SOURCE",
+          api: "API",
+          id: "🇮🇩",
+          local: "SELF-HOST",
+          paid: "PAID",
+        };
+        const cls = {
+          free: "tag-free",
+          open: "tag-open",
+          api: "tag-api",
+          id: "tag-id",
+          local: "tag-open",
+          paid: "tag-paid",
+        };
+        return `<span class="tag ${cls[tag] || ""}">${map[tag] || tag}</span>`;
+      }
+
+      function render(filtered) {
+        const grid = document.getElementById("cat-grid");
+        const byCat = {};
+        CATEGORIES.forEach((c) => {
+          byCat[c] = [];
+        });
+        filtered.forEach((t) => {
+          if (byCat[t.cat]) byCat[t.cat].push(t);
+        });
+
+        let html = "";
+        CATEGORIES.forEach((cat) => {
+          const tools = byCat[cat];
+          if (!tools.length) return;
+          const icon = CAT_ICONS[cat] || "◆";
+          html += `
+    <div class="cat-section visible open">
+      <div class="cat-header" onclick="toggleCat(this)">
+        <div class="cat-title">${icon} ${cat} <span class="cat-count">${tools.length}</span></div>
+        <span class="cat-toggle">▼</span>
+      </div>
+      <div class="cat-body">
+        ${tools
+          .map(
+            (t) => `
+        <div class="tool-item">
+          <div>
+            <div class="tool-name">⬡ ${t.name}</div>
+            <div class="tool-desc">${t.desc}</div>
+            <div class="tool-tags">${t.tags.map(tagBadge).join("")}</div>
+          </div>
+          ${t.link ? `<a href="https://${t.link}" target="_blank" rel="noopener" class="tool-link">↗ ${t.link}</a>` : ""}
+        </div>`,
+          )
+          .join("")}
+      </div>
+    </div>`;
+        });
+
+        grid.innerHTML = html;
+        const empty = document.getElementById("empty");
+        empty.classList.toggle("show", !filtered.length);
+        document.getElementById("empty-query").textContent = searchVal;
+      }
+
+      function updateResults() {
+        const t = TRANSLATIONS[currentLang];
+        const q = searchVal.toLowerCase();
+        let filtered = DATA;
+
+        if (currentFilter !== "all") {
+          filtered = filtered.filter((t) => t.tags.includes(currentFilter));
+        }
+        if (q) {
+          filtered = filtered.filter(
+            (t) =>
+              t.name.toLowerCase().includes(q) ||
+              t.desc.toLowerCase().includes(q) ||
+              t.cat.toLowerCase().includes(q) ||
+              t.tags.some((tag) => tag.includes(q)),
+          );
+        }
+
+        const info = document.getElementById("results-info");
+        info.textContent =
+          q || currentFilter !== "all"
+            ? t.showing(filtered.length, q || currentFilter)
+            : t.showingAll;
+
+        render(filtered);
+      }
+
+      function toggleCat(header) {
+        header.parentElement.classList.toggle("open");
+      }
+
+      // Filter buttons
+      document.getElementById("filter-row").addEventListener("click", (e) => {
+        if (!e.target.matches(".filter-btn")) return;
+        currentFilter = e.target.dataset.filter;
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        e.target.classList.add("active");
+        updateResults();
+      });
+
+      // Search
+      let debounce;
+      document.getElementById("search").addEventListener("input", (e) => {
+        searchVal = e.target.value;
+        clearTimeout(debounce);
+        debounce = setTimeout(updateResults, 150);
+      });
+
+      // Init
+      render(DATA);
+    </script>
+  </body>
+</html>
